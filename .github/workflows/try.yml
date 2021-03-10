@@ -6,7 +6,7 @@ jobs:
   try-job:
     runs-on: ubuntu-latest
     steps:
-    - name: Dump github context
-      run: echo "${{ toJson(github) }}"
     - name: Repository name
-      run: echo "${{ github.repository.name }}"
+    - run: echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
+    - name: Print Repository name
+      run: echo "$REPOSITORY_NAME"
