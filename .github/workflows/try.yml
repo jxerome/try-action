@@ -8,3 +8,5 @@ jobs:
     steps:
     - name: Dump github context
       run: echo "${{ toJson(github) }}"
+    - name: Repository name
+      run: echo "${{ github.repository.name }}"
