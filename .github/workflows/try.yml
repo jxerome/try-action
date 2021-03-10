@@ -8,8 +8,10 @@ jobs:
     steps:
     - name: Repository name
       id: info
-      run: echo ::set-output name=repository-name::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
+      run: |
+        echo ::set-output name=repository-name::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
+        echo ::set-output name=repository-name-no-sed::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}'")
     - name: Print Repository name
-      run: echo "$REPOSITORY_NAME"
-      env:
-        REPOSITORY_NAME: ${{ steps.info.outputs.repository-name }}
+      run: |
+        echo "repo-name with sed: ${{ steps.info.outputs.repository-name }}"
+        echo "repo-name without sed: ${{ steps.info.outputs.repository-name-no-sed }}"
