@@ -7,6 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Repository name
-      run: echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
+      id: info
+      run: echo ::set-output name=repository-name::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
     - name: Print Repository name
       run: echo "$REPOSITORY_NAME"
+      env:
+        REPOSITORY_NAME: ${{ steps.info.outputs.repository-name }}
